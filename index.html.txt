@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>আল আমীন রিসার্চ পাবলিকেশন</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0e0c;--surface:#1a1814;--surface2:#242018;--surface3:#2e2a22;
+  --border:#3d3626;--accent:#d4a843;--accent2:#e8c06a;--accent3:#8b6914;
+  --text:#f0e8d6;--text2:#b8a888;--text3:#7a6e5a;
+  --red:#e05c5c;--green:#5cb85c;--blue:#5c9be0;--purple:#9b6ae0;--orange:#e09b5c;
+  --sw:260px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow:hidden;font-size:14px;}
+
+/* SIDEBAR */
+.sidebar{width:var(--sw);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;height:100vh;z-index:100;overflow-y:auto;transition:transform .3s;}
+.sidebar-logo{padding:16px 16px 12px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.logo-icon{font-size:24px;margin-bottom:4px;}
+.logo-title{font-family:'Noto Serif Bengali',serif;font-size:14px;font-weight:700;color:var(--accent);line-height:1.4;}
+.logo-sub{font-size:10px;color:var(--text3);margin-top:2px;}
+.nav-section{padding:8px 0;}
+.nav-label{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:5px 16px;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;transition:all .2s;font-size:13px;color:var(--text2);border-left:3px solid transparent;}
+.nav-item:hover{background:var(--surface2);color:var(--text);}
+.nav-item.active{background:var(--surface2);color:var(--accent);border-left-color:var(--accent);}
+.nav-icon{font-size:14px;width:18px;text-align:center;}
+.notif-dot{width:6px;height:6px;background:var(--red);border-radius:50%;margin-left:auto;flex-shrink:0;}
+
+/* MAIN */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;}
+.page-title{font-family:'Noto Serif Bengali',serif;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.hamburger{display:none;background:none;border:1px solid var(--border);color:var(--text2);width:34px;height:34px;border-radius:7px;cursor:pointer;font-size:16px;align-items:center;justify-content:center;}
+.content{flex:1;overflow-y:auto;padding:16px;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.stat-label{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.stat-value{font-size:22px;font-weight:700;color:var(--accent);font-family:'Noto Serif Bengali',serif;}
+.stat-sub{font-size:10px;color:var(--text3);margin-top:3px;}
+.stat-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:28px;opacity:.12;}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;}
+.card-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.card-title{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px;}
+.card-body{padding:14px;}
+
+/* BUTTONS */
+.btn{padding:7px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:12px;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:#1a1400;font-weight:700;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-outline:hover{background:var(--surface2);color:var(--text);}
+.btn-danger{background:#4a1a1a;color:var(--red);border:1px solid #6b2828;}
+.btn-success{background:#1a3a1a;color:var(--green);border:1px solid #2a5a2a;}
+.btn-sm{padding:4px 9px;font-size:11px;}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:11px;color:var(--text3);font-weight:500;}
+input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-family:'Hind Siliguri',sans-serif;font-size:12px;outline:none;transition:border-color .2s;width:100%;}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+input::placeholder{color:var(--text3);}
+select option{background:var(--surface2);}
+textarea{resize:vertical;min-height:70px;}
+.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{background:var(--surface2);padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+td{padding:9px 10px;border-bottom:1px solid rgba(61,54,38,.4);color:var(--text2);vertical-align:middle;}
+tr:hover td{background:var(--surface2);}
+tr:last-child td{border-bottom:none;}
+.td-primary{color:var(--text);font-weight:500;}
+.td-code{font-family:monospace;font-size:11px;color:var(--accent);background:rgba(212,168,67,.1);padding:2px 5px;border-radius:4px;}
+.total-row td{background:var(--surface2);font-weight:700;color:var(--accent);border-top:2px solid var(--border);}
+
+/* BADGE */
+.badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;}
+.badge-green{background:rgba(92,184,92,.15);color:var(--green);}
+.badge-red{background:rgba(224,92,92,.15);color:var(--red);}
+.badge-yellow{background:rgba(212,168,67,.15);color:var(--accent);}
+.badge-blue{background:rgba(92,155,224,.15);color:var(--blue);}
+.badge-purple{background:rgba(155,106,224,.15);color:var(--purple);}
+.badge-orange{background:rgba(224,155,92,.15);color:var(--orange);}
+
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.search-box{flex:1;min-width:160px;position:relative;}
+.search-box input{padding-left:30px;}
+.search-box::before{content:'🔍';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:12px;}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.section-title{font-family:'Noto Serif Bengali',serif;font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:7px;}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--surface2);padding:3px;border-radius:8px;margin-bottom:14px;overflow-x:auto;}
+.tab{padding:7px 13px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--text3);transition:all .2s;white-space:nowrap;}
+.tab.active{background:var(--surface);color:var(--accent);font-weight:600;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:12px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:100%;max-width:680px;max-height:92vh;overflow-y:auto;}
+.modal-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1;}
+.modal-title{font-family:'Noto Serif Bengali',serif;font-size:15px;font-weight:600;color:var(--accent);}
+.modal-close{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;}
+.modal-close:hover{background:var(--surface2);color:var(--text);}
+.modal-body{padding:18px;}
+
+/* ALERT */
+.due-alert{background:rgba(224,92,92,.1);border:1px solid rgba(224,92,92,.3);border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.due-alert-text{font-size:12px;color:var(--red);flex:1;}
+
+/* PROGRESS */
+.progress-bar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:4px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent3),var(--accent));border-radius:3px;}
+
+/* MINI CHART */
+.mini-chart{display:flex;align-items:flex-end;gap:4px;height:70px;padding:8px 0;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bar{width:100%;background:linear-gradient(180deg,var(--accent),var(--accent3));border-radius:3px 3px 0 0;min-height:3px;}
+.bar-label{font-size:8px;color:var(--text3);}
+
+/* PERIOD BTNS */
+.summary-period{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.period-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:11px;transition:all .2s;}
+.period-btn.active{background:var(--accent);color:#1a1400;border-color:var(--accent);font-weight:700;}
+
+/* EXPENSE CATEGORY CARD */
+.exp-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.exp-cat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;transition:all .2s;text-align:center;}
+.exp-cat:hover,.exp-cat.active{border-color:var(--accent);background:rgba(212,168,67,.07);}
+.exp-cat-icon{font-size:20px;margin-bottom:4px;}
+.exp-cat-name{font-size:10px;color:var(--text3);font-weight:600;}
+.exp-cat-total{font-size:13px;font-weight:700;color:var(--accent);}
+
+/* CASHMEMO */
+.memo-builder{display:grid;grid-template-columns:1fr 400px;gap:16px;align-items:start;}
+.memo-form-panel{display:flex;flex-direction:column;gap:12px;}
+.memo-preview-panel{position:sticky;top:0;}
+
+/* MEMO PAPER */
+.memo-paper{background:#fff;color:#111;border-radius:8px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.5);font-family:'Hind Siliguri',sans-serif;}
+.memo-header-band{background:linear-gradient(135deg,#1a3a2a 0%,#0d2218 100%);padding:14px 18px 12px;color:#fff;position:relative;overflow:hidden;}
+.memo-header-band::after{content:'📚';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:42px;opacity:.1;}
+.memo-pub-name{font-family:'Noto Serif Bengali',serif;font-size:17px;font-weight:700;color:#d4a843;line-height:1.3;}
+.memo-pub-sub{font-size:10px;color:rgba(255,255,255,.65);margin-top:2px;line-height:1.5;}
+.memo-title-row{background:#d4a843;text-align:center;padding:5px;font-weight:700;font-size:11px;color:#1a0e00;letter-spacing:2px;text-transform:uppercase;}
+.memo-meta{display:flex;justify-content:space-between;padding:10px 15px;border-bottom:1px solid #e0d0b0;gap:8px;flex-wrap:wrap;}
+.memo-meta-col{font-size:10.5px;color:#333;line-height:1.7;}
+.memo-meta-col strong{color:#111;}
+.memo-items-tbl{width:100%;border-collapse:collapse;font-size:10.5px;}
+.memo-items-tbl th{background:#f5ead0;padding:6px 8px;text-align:left;color:#5a3e00;font-weight:700;border-bottom:2px solid #d4a843;font-size:9.5px;text-transform:uppercase;}
+.memo-items-tbl td{padding:6px 8px;border-bottom:1px solid #f0e8d0;color:#222;vertical-align:middle;}
+.memo-items-tbl tr:hover td{background:#faf5e8;}
+.i-code{font-family:monospace;font-size:9px;color:#8b6914;background:#fef3d0;padding:1px 4px;border-radius:3px;}
+.memo-total-section{padding:8px 15px;border-top:2px solid #d4a843;background:#fffdf5;}
+.memo-total-row{display:flex;justify-content:space-between;font-size:10.5px;color:#444;padding:2px 0;}
+.memo-total-row.grand{font-size:14px;font-weight:700;color:#1a3a2a;padding-top:5px;margin-top:3px;border-top:1px dashed #d4a843;}
+.memo-words{background:#f5ead0;padding:6px 15px;font-size:10px;color:#5a3e00;border-top:1px solid #e0d0b0;font-style:italic;}
+.memo-pay-row{display:flex;justify-content:space-between;padding:7px 15px;font-size:10.5px;border-top:1px solid #e8d8b0;gap:5px;}
+.memo-pay-item{text-align:center;flex:1;}
+.p-label{font-size:9px;color:#888;}
+.p-value{font-weight:700;color:#111;font-size:11px;}
+.p-value.due{color:#c0392b;}
+.p-value.paid-ok{color:#27ae60;}
+.memo-sig-row{display:flex;justify-content:space-between;padding:12px 15px 8px;font-size:9.5px;color:#666;border-top:1px dashed #ddd;}
+.memo-sig-item{text-align:center;}
+.sig-line{width:80px;border-top:1px solid #aaa;margin:18px auto 3px;}
+.memo-footer-band{background:#1a3a2a;padding:7px 15px;display:flex;justify-content:space-between;align-items:center;}
+.memo-footer-band .fl{font-size:9px;color:rgba(255,255,255,.5);}
+.memo-footer-band .fr{font-size:9px;color:#d4a843;font-style:italic;}
+.item-row-form{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 28px;gap:6px;align-items:end;padding:8px;background:var(--surface2);border-radius:7px;border:1px solid var(--border);margin-bottom:6px;}
+.rm-btn{background:rgba(224,92,92,.15);border:none;color:var(--red);border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;align-self:flex-end;}
+.rm-btn:hover{background:rgba(224,92,92,.3);}
+.memo-type-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.memo-type-btn{flex:1;min-width:90px;padding:8px 6px;border-radius:7px;border:2px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:11px;text-align:center;transition:all .2s;}
+.memo-type-btn.active{border-color:var(--accent);background:rgba(212,168,67,.1);color:var(--accent);font-weight:700;}
+.memo-list-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);margin-bottom:7px;transition:all .2s;flex-wrap:wrap;}
+.memo-list-num{font-family:monospace;font-size:11px;color:var(--accent);background:rgba(212,168,67,.1);padding:2px 7px;border-radius:4px;white-space:nowrap;}
+.memo-list-info{flex:1;min-width:120px;}
+.memo-list-name{font-size:12px;font-weight:600;color:var(--text);}
+.memo-list-meta{font-size:10px;color:var(--text3);margin-top:1px;}
+.memo-list-amount{font-size:13px;font-weight:700;color:var(--accent);}
+
+/* LOAN CARD */
+.loan-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;}
+.loan-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;}
+.loan-name{font-size:13px;font-weight:600;color:var(--text);}
+.loan-bar{height:6px;background:var(--surface3);border-radius:3px;margin-top:6px;}
+.loan-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));border-radius:3px;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--surface);}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* OVERLAY when sidebar open on mobile */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
+.sidebar-overlay.show{display:block;}
+
+/* PRINT */
+@media print{body>*{display:none!important;}#print-area{display:block!important;position:fixed;inset:0;z-index:9999;background:#fff;overflow:auto;}}
+#print-area{display:none;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .exp-cat-grid{grid-template-columns:repeat(2,1fr);}
+  .memo-builder{grid-template-columns:1fr;}
+  .memo-preview-panel{position:static;}
+}
+@media(max-width:768px){
+  :root{--sw:240px;}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0!important;}
+  .hamburger{display:flex;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .form-grid,.form-grid-3{grid-template-columns:1fr;}
+  .exp-cat-grid{grid-template-columns:repeat(2,1fr);}
+  .item-row-form{grid-template-columns:1fr 1fr 28px;grid-template-rows:auto auto;}
+  .topbar-right .btn-outline{display:none;}
+  .memo-type-btn{min-width:70px;font-size:10px;}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr;}
+  .content{padding:10px;}
+  .card-header{padding:10px 12px;}
+  .card-body{padding:10px;}
+  th,td{padding:7px 8px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PRINT AREA -->
+<div id="print-area"><div id="print-content"></div></div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📚</div>
+    <div class="logo-title">আল আমীন রিসার্চ পাবলিকেশন</div>
+    <div class="logo-sub">সম্পূর্ণ প্রকাশনী ব্যবস্থাপনা</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">প্রধান</div>
+    <div class="nav-item active" onclick="go('dashboard')"><span class="nav-icon">🏠</span>ড্যাশবোর্ড</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">বই ব্যবস্থাপনা</div>
+    <div class="nav-item" onclick="go('own-books')"><span class="nav-icon">📗</span>নিজের বই</div>
+    <div class="nav-item" onclick="go('dist-books')"><span class="nav-icon">📦</span>পরিবেশিত বই</div>
+    <div class="nav-item" onclick="go('other-books')"><span class="nav-icon">📘</span>অন্য প্রকাশনীর বই</div>
+    <div class="nav-item" onclick="go('stock')"><span class="nav-icon">🗃️</span>স্টক ব্যবস্থাপনা</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">বিক্রয় ও ক্রয়</div>
+    <div class="nav-item" onclick="go('sales')"><span class="nav-icon">🛒</span>বিক্রয় এন্ট্রি</div>
+    <div class="nav-item" onclick="go('purchase')"><span class="nav-icon">🔄</span>ক্রয় এন্ট্রি</div>
+    <div class="nav-item" onclick="go('due')"><span class="nav-icon">⏰</span>ডিউ ব্যবস্থাপনা<div class="notif-dot"></div></div>
+    <div class="nav-item" onclick="go('cashmemo')"><span class="nav-icon">🧾</span>ক্যাশ মেমো</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">কাস্টমার</div>
+    <div class="nav-item" onclick="go('agents')"><span class="nav-icon">🤝</span>এজেন্ট</div>
+    <div class="nav-item" onclick="go('wholesale')"><span class="nav-icon">🏪</span>পাইকারি</div>
+    <div class="nav-item" onclick="go('retail')"><span class="nav-icon">👤</span>খুচরা</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">খরচ হিসাব</div>
+    <div class="nav-item" onclick="go('expense')"><span class="nav-icon">💸</span>সব ধরনের খরচ</div>
+    <div class="nav-item" onclick="go('printing-cost')"><span class="nav-icon">🖨️</span>মুদ্রণ খরচ</div>
+    <div class="nav-item" onclick="go('loan')"><span class="nav-icon">🏦</span>লোন ব্যবস্থাপনা</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">হিসাব-নিকাশ</div>
+    <div class="nav-item" onclick="go('royalty')"><span class="nav-icon">✍️</span>লেখক রয়্যালটি</div>
+    <div class="nav-item" onclick="go('profit')"><span class="nav-icon">💰</span>লাভ-লোকসান</div>
+    <div class="nav-item" onclick="go('summary')"><span class="nav-icon">📊</span>সামারি রিপোর্ট</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">সিস্টেম</div>
+    <div class="nav-item" onclick="go('settings')"><span class="nav-icon">⚙️</span>সেটিংস</div>
+    <div class="nav-item" onclick="go('backup')"><span class="nav-icon">💾</span>ব্যাকআপ</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main" id="main-content">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px;overflow:hidden;">
+      <button class="hamburger" id="ham-btn" onclick="toggleSidebar()">☰</button>
+      <div class="page-title" id="page-title">ড্যাশবোর্ড</div>
+    </div>
+    <div class="topbar-right">
+      <span id="topbar-date" style="font-size:11px;color:var(--text3);white-space:nowrap;"></span>
+      <button class="btn btn-primary btn-sm" onclick="go('cashmemo')">🧾 মেমো</button>
+      <button class="btn btn-outline btn-sm" onclick="openModal('quick-sale-modal')">⚡ বিক্রয়</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+  <!-- ======= DASHBOARD ======= -->
+  <div class="page active" id="page-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">আজকের বিক্রয়</div><div class="stat-value">৳ ৮,৪৫০</div><div class="stat-sub">১৮টি বই</div><div class="stat-icon">📈</div></div>
+      <div class="stat-card"><div class="stat-label">মোট ডিউ</div><div class="stat-value" style="color:var(--red)">৳ ১,২৩,৫০০</div><div class="stat-sub">১২ জন বাকি</div><div class="stat-icon">⚠️</div></div>
+      <div class="stat-card"><div class="stat-label">এই মাসের লাভ</div><div class="stat-value" style="color:var(--green)">৳ ৪৫,২৩০</div><div class="stat-sub">↑ ১২% গত মাস থেকে</div><div class="stat-icon">💰</div></div>
+      <div class="stat-card"><div class="stat-label">মোট বই (তিন ধরন)</div><div class="stat-value">৬২</div><div class="stat-sub">নিজের ২৪ | পরিবেশিত ২২ | অন্য ১৬</div><div class="stat-icon">📚</div></div>
+    </div>
+    <div class="due-alert">
+      <span style="font-size:16px">🔔</span>
+      <div class="due-alert-text">৩ জন কাস্টমারের ডিউ আদায়ের তারিখ পেরিয়ে গেছে।</div>
+      <button class="btn btn-danger btn-sm" onclick="go('due')">বিস্তারিত</button>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📊 মাসিক বিক্রয়</div></div>
+        <div class="card-body"><div class="mini-chart" id="dash-chart"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">⚡ সাম্প্রতিক লেনদেন</div><button class="btn btn-outline btn-sm" onclick="go('sales')">সব দেখুন</button></div>
+        <div class="table-wrap"><table>
+          <tr><th>তারিখ</th><th>কাস্টমার</th><th>পরিমাণ</th><th>অবস্থা</th></tr>
+          <tr><td>০৫/০৬</td><td class="td-primary">রহিম বুক হাউস</td><td>৳ ৪,২০০</td><td><span class="badge badge-green">পরিশোধ</span></td></tr>
+          <tr><td>০৫/০৬</td><td class="td-primary">করিম এজেন্সি</td><td>৳ ১২,৫০০</td><td><span class="badge badge-red">বাকি</span></td></tr>
+          <tr><td>০৪/০৬</td><td class="td-primary">নূর স্টোর</td><td>৳ ৩,৮০০</td><td><span class="badge badge-green">পরিশোধ</span></td></tr>
+        </table></div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📦 কম স্টক</div></div>
+        <div class="table-wrap"><table>
+          <tr><th>কোড</th><th>নাম</th><th>স্টক</th></tr>
+          <tr><td><span class="td-code">NB-001</span></td><td class="td-primary">জীবনের পথে</td><td><span class="badge badge-red">৮</span></td></tr>
+          <tr><td><span class="td-code">PB-003</span></td><td class="td-primary">আলোর পথিক</td><td><span class="badge badge-yellow">১২</span></td></tr>
+        </table></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🏆 সেরা বিক্রিত</div></div>
+        <div class="table-wrap"><table>
+          <tr><th>বই</th><th>কপি</th></tr>
+          <tr><td class="td-primary">জীবনের গল্প</td><td><span class="badge badge-green">১২৪</span></td></tr>
+          <tr><td class="td-primary">ইসলামী জীবন</td><td><span class="badge badge-blue">৯৮</span></td></tr>
+        </table></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">💸 এই মাসের খরচ</div></div>
+        <div class="table-wrap"><table>
+          <tr><th>বিভাগ</th><th>পরিমাণ</th></tr>
+          <tr><td class="td-primary">অফিস ভাড়া</td><td>৳ ১২,০০০</td></tr>
+          <tr><td class="td-primary">বেতন/ভাতা</td><td>৳ ৩৫,০০০</td></tr>
+          <tr><td class="td-primary">প্রেস বিল</td><td>৳ ৮০,০০০</td></tr>
+        </table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= OWN BOOKS ======= -->
+  <div class="page" id="page-own-books">
+    <div class="section-header">
+      <div class="section-title">📗 নিজের প্রকাশিত বই</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('book-modal','own')">➕ নতুন বই</button>
+    </div>
+    <div class="filter-bar">
+      <div class="search-box"><input type="text" placeholder="বই খুঁজুন..." oninput="filterTbl(this,'tbl-own')"></div>
+      <select style="width:140px"><option>সব বিভাগ</option><option>ইসলামী</option><option>সাহিত্য</option><option>শিক্ষামূলক</option><option>শিশু সাহিত্য</option></select>
+    </div>
+    <div class="card"><div class="table-wrap"><table id="tbl-own">
+      <thead><tr><th>কোড</th><th>বইয়ের নাম</th><th>লেখক</th><th>বিভাগ</th><th>মুদ্রণ মূল্য</th><th>বিক্রয় মূল্য</th><th>পাইকারি কমিশন</th><th>এজেন্ট কমিশন</th><th>লেখক রয়্যালটি %</th><th>স্টক</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">NB-001</span></td><td class="td-primary">জীবনের পথে</td><td>মোহাম্মদ আলী</td><td><span class="badge badge-blue">ইসলামী</span></td><td>৳ ১৮০</td><td>৳ ২৫০</td><td>২৫%</td><td>৩০%</td><td>১০%</td><td><span class="badge badge-red">৮</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr><td><span class="td-code">NB-002</span></td><td class="td-primary">আলোর দিশারী</td><td>সাইফুল ইসলাম</td><td><span class="badge badge-green">সাহিত্য</span></td><td>৳ ২২০</td><td>৳ ৩৫০</td><td>২৫%</td><td>৩০%</td><td>১২%</td><td><span class="badge badge-green">২৪৫</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= DISTRIBUTED BOOKS ======= -->
+  <div class="page" id="page-dist-books">
+    <div class="section-header">
+      <div class="section-title">📦 পরিবেশিত বই</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('book-modal','dist')">➕ বই যোগ</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table id="tbl-dist">
+      <thead><tr><th>কোড</th><th>বইয়ের নাম</th><th>মূল প্রকাশনী</th><th>চুক্তির ধরন</th><th>বিক্রয় মূল্য</th><th>কমিশন %</th><th>স্টক</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">PB-001</span></td><td class="td-primary">বাংলা ব্যাকরণ সমগ্র</td><td>জ্ঞানবৃক্ষ পাবলিশার্স</td><td><span class="badge badge-blue">একক পরিবেশক</span></td><td>৳ ৩৮০</td><td>৩৫%</td><td><span class="badge badge-green">১৮০</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr><td><span class="td-code">PB-002</span></td><td class="td-primary">ইসলামী ফিকহ</td><td>দারুল কলম</td><td><span class="badge badge-orange">জোনাল পরিবেশক</span></td><td>৳ ৫২০</td><td>৩০%</td><td><span class="badge badge-yellow">৪৫</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= OTHER BOOKS ======= -->
+  <div class="page" id="page-other-books">
+    <div class="section-header">
+      <div class="section-title">📘 অন্য প্রকাশনীর বই</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('book-modal','other')">➕ বই যোগ</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কোড</th><th>বইয়ের নাম</th><th>লেখক</th><th>প্রকাশনী</th><th>ক্রয় মূল্য</th><th>বিক্রয় মূল্য</th><th>লাভ %</th><th>স্টক</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">OB-001</span></td><td class="td-primary">রবীন্দ্র রচনাবলী</td><td>রবীন্দ্রনাথ</td><td>আনন্দ পাবলিশার্স</td><td>৳ ৪৮০</td><td>৳ ৬০০</td><td>২৫%</td><td><span class="badge badge-green">৩৫</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= STOCK ======= -->
+  <div class="page" id="page-stock">
+    <div class="section-header">
+      <div class="section-title">🗃️ স্টক ব্যবস্থাপনা</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-success btn-sm">📥 স্টক ইন</button>
+        <button class="btn btn-danger btn-sm">📤 স্টক আউট</button>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">মোট কপি</div><div class="stat-value">৪,৮২৩</div><div class="stat-icon">📚</div></div>
+      <div class="stat-card"><div class="stat-label">স্টক মূল্য</div><div class="stat-value">৳ ৮,৪৫,৩২০</div><div class="stat-icon">💎</div></div>
+      <div class="stat-card"><div class="stat-label">কম স্টক</div><div class="stat-value" style="color:var(--red)">৫</div><div class="stat-sub">বই</div><div class="stat-icon">⚠️</div></div>
+      <div class="stat-card"><div class="stat-label">আউট অব স্টক</div><div class="stat-value" style="color:var(--red)">২</div><div class="stat-icon">❌</div></div>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কোড</th><th>বইয়ের নাম</th><th>ধরন</th><th>মুদ্রণ</th><th>বিক্রি</th><th>বর্তমান</th><th>রিজার্ভ</th><th>অবস্থা</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">NB-001</span></td><td class="td-primary">জীবনের পথে</td><td><span class="badge badge-green">নিজের</span></td><td>১,০০০</td><td>৯৯২</td><td><b style="color:var(--red)">৮</b></td><td>০</td><td><span class="badge badge-red">জরুরি</span></td></tr>
+        <tr><td><span class="td-code">NB-002</span></td><td class="td-primary">আলোর দিশারী</td><td><span class="badge badge-green">নিজের</span></td><td>৫০০</td><td>২৫৫</td><td>২৪৫</td><td>২০</td><td><span class="badge badge-green">স্বাভাবিক</span></td></tr>
+        <tr><td><span class="td-code">PB-001</span></td><td class="td-primary">বাংলা ব্যাকরণ সমগ্র</td><td><span class="badge badge-blue">পরিবেশিত</span></td><td>৩০০</td><td>১২০</td><td>১৮০</td><td>০</td><td><span class="badge badge-green">স্বাভাবিক</span></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= SALES ======= -->
+  <div class="page" id="page-sales">
+    <div class="section-header">
+      <div class="section-title">🛒 বিক্রয় এন্ট্রি</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('sale-modal')">➕ নতুন বিক্রয়</button>
+    </div>
+    <div class="filter-bar">
+      <div class="search-box"><input type="text" placeholder="ইনভয়েস / কাস্টমার..."></div>
+      <input type="date" style="width:130px"><input type="date" style="width:130px">
+      <select style="width:120px"><option>সব অবস্থা</option><option>পরিশোধ</option><option>বাকি</option><option>আংশিক</option></select>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>ইনভয়েস</th><th>তারিখ</th><th>কাস্টমার</th><th>টাইপ</th><th>নিট মূল্য</th><th>পরিশোধ</th><th>বাকি</th><th>অবস্থা</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">INV-001</span></td><td>০৫/০৬/২০২৫</td><td class="td-primary">রহিম বুক হাউস</td><td><span class="badge badge-blue">পাইকারি</span></td><td>৳ ৪,২০০</td><td>৳ ৪,২০০</td><td>৳ ০</td><td><span class="badge badge-green">পরিশোধ</span></td><td><button class="btn btn-outline btn-sm" onclick="loadSampleMemo();go('cashmemo')">🧾</button></td></tr>
+        <tr><td><span class="td-code">INV-002</span></td><td>০৫/০৬/২০২৫</td><td class="td-primary">করিম এজেন্সি</td><td><span class="badge badge-purple">এজেন্ট</span></td><td>৳ ১২,৫০০</td><td>৳ ০</td><td>৳ ১২,৫০০</td><td><span class="badge badge-red">বাকি</span></td><td><button class="btn btn-success btn-sm">💰</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= DUE ======= -->
+  <div class="page" id="page-due">
+    <div class="section-header">
+      <div class="section-title">⏰ ডিউ ব্যবস্থাপনা</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('due-modal')">💰 ডিউ আদায়</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">মোট বকেয়া</div><div class="stat-value" style="color:var(--red)">৳ ১,২৩,৫০০</div><div class="stat-icon">💸</div></div>
+      <div class="stat-card"><div class="stat-label">মেয়াদোত্তীর্ণ</div><div class="stat-value" style="color:var(--red)">৳ ৪৫,২০০</div><div class="stat-sub">৩ জন</div><div class="stat-icon">⚠️</div></div>
+      <div class="stat-card"><div class="stat-label">এই মাসে আদায়</div><div class="stat-value" style="color:var(--green)">৳ ৩৮,৪০০</div><div class="stat-icon">✅</div></div>
+      <div class="stat-card"><div class="stat-label">গড় আদায় সময়</div><div class="stat-value">১৮ দিন</div><div class="stat-icon">⏱️</div></div>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কাস্টমার</th><th>টাইপ</th><th>মোবাইল</th><th>বিক্রয় তারিখ</th><th>ডিউ তারিখ</th><th>বাকি</th><th>দিন</th><th>অবস্থা</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td class="td-primary">করিম এজেন্সি</td><td><span class="badge badge-purple">এজেন্ট</span></td><td>০১৭১১-২২৩৩৪৪</td><td>০৫/০৬</td><td>২০/০৬</td><td>৳ ১২,৫০০</td><td><span class="badge badge-yellow">১৫</span></td><td><span class="badge badge-yellow">চলমান</span></td><td><button class="btn btn-success btn-sm">💰 আদায়</button></td></tr>
+        <tr><td class="td-primary">নজরুল বুক কর্নার</td><td><span class="badge badge-blue">পাইকারি</span></td><td>০১৮৮৮-৫৫৬৬৭৭</td><td>১৫/০৫</td><td>০১/০৬</td><td>৳ ২৮,৩০০</td><td><span class="badge badge-red">-৪</span></td><td><span class="badge badge-red">মেয়াদোত্তীর্ণ</span></td><td><button class="btn btn-success btn-sm">💰 আদায়</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= AGENTS / WHOLESALE / RETAIL ======= -->
+  <div class="page" id="page-agents">
+    <div class="section-header"><div class="section-title">🤝 এজেন্ট তালিকা</div><button class="btn btn-primary btn-sm" onclick="openModal('customer-modal','এজেন্ট')">➕ নতুন এজেন্ট</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কোড</th><th>প্রতিষ্ঠান</th><th>মালিক</th><th>ঠিকানা</th><th>মালিকের মোবাইল</th><th>ম্যানেজার মোবাইল</th><th>কমিশন</th><th>মোট ক্রয়</th><th>বকেয়া</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">AG-001</span></td><td class="td-primary">করিম এজেন্সি</td><td>আব্দুল করিম</td><td>নীলক্ষেত, ঢাকা</td><td>০১৭১১-২২৩৩৪৪</td><td>০১৮৮৮-১১২২৩৩</td><td>৩০%</td><td>৳ ১,২৪,৫০০</td><td style="color:var(--red)">৳ ১২,৫০০</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <div class="page" id="page-wholesale">
+    <div class="section-header"><div class="section-title">🏪 পাইকারি কাস্টমার</div><button class="btn btn-primary btn-sm" onclick="openModal('customer-modal','পাইকারি')">➕ নতুন পাইকারি</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কোড</th><th>প্রতিষ্ঠান</th><th>মালিক</th><th>ঠিকানা</th><th>মোবাইল</th><th>ক্রেডিট লিমিট</th><th>মোট ক্রয়</th><th>বকেয়া</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-code">WH-001</span></td><td class="td-primary">রহিম বুক হাউস</td><td>আব্দুর রহিম</td><td>বাংলাবাজার, ঢাকা</td><td>০১৭৫৫-৩৩৪৪৫৫</td><td>৳ ৫০,০০০</td><td>৳ ৩২,৮০০</td><td style="color:var(--green)">৳ ০</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <div class="page" id="page-retail">
+    <div class="section-header"><div class="section-title">👤 খুচরা কাস্টমার</div><button class="btn btn-primary btn-sm" onclick="openModal('customer-modal','খুচরা')">➕ নতুন</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>কোড</th><th>নাম</th><th>ঠিকানা</th><th>মোবাইল</th><th>মোট ক্রয়</th><th>বকেয়া</th><th>অ্যাকশন</th></tr></thead>
+      <tbody><tr><td><span class="td-code">RT-001</span></td><td class="td-primary">সুমাইয়া বেগম</td><td>মিরপুর, ঢাকা</td><td>০১৭৪৪-১১২২৩৩</td><td>৳ ৮,৫৫০</td><td style="color:var(--green)">৳ ০</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr></tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= EXPENSE ======= -->
+  <div class="page" id="page-expense">
+    <div class="section-header">
+      <div class="section-title">💸 সব ধরনের খরচ</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('expense-modal')">➕ খরচ যোগ</button>
+    </div>
+
+    <div class="exp-cat-grid">
+      <div class="exp-cat active" onclick="filterExpense(this,'all')"><div class="exp-cat-icon">📋</div><div class="exp-cat-name">সব খরচ</div><div class="exp-cat-total">৳ ১,৪০,২০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'office')"><div class="exp-cat-icon">🏢</div><div class="exp-cat-name">অফিস/গোডাউন ভাড়া</div><div class="exp-cat-total">৳ ২২,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'salary')"><div class="exp-cat-icon">👥</div><div class="exp-cat-name">বেতন / ভাতা / বোনাস</div><div class="exp-cat-total">৳ ৩৫,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'author')"><div class="exp-cat-icon">✍️</div><div class="exp-cat-name">লেখক-কম্পোজ বিল</div><div class="exp-cat-total">৳ ১৫,৫০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'design')"><div class="exp-cat-icon">🎨</div><div class="exp-cat-name">কভার/ইনার ডিজাইন</div><div class="exp-cat-total">৳ ১২,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'plate')"><div class="exp-cat-icon">🔩</div><div class="exp-cat-name">প্লেট মেকিং বিল</div><div class="exp-cat-total">৳ ৮,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'press')"><div class="exp-cat-icon">🖨️</div><div class="exp-cat-name">প্রেসের হিসাব</div><div class="exp-cat-total">৳ ৮০,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'paper')"><div class="exp-cat-icon">📄</div><div class="exp-cat-name">কাগজ বিল</div><div class="exp-cat-total">৳ ৪৫,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'cover-print')"><div class="exp-cat-icon">🎭</div><div class="exp-cat-name">কভার/ইনার কালার ছাপা</div><div class="exp-cat-total">৳ ২৮,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'finish')"><div class="exp-cat-icon">✨</div><div class="exp-cat-name">স্পট/ম্যাট/এ্যাম্বুশ/ফয়েল</div><div class="exp-cat-total">৳ ১৮,৫০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'binding')"><div class="exp-cat-icon">📎</div><div class="exp-cat-name">বাঁধাই বিল</div><div class="exp-cat-total">৳ ১২,০০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'carrying')"><div class="exp-cat-icon">🚚</div><div class="exp-cat-name">ক্যারিং বিল</div><div class="exp-cat-total">৳ ৫,২০০</div></div>
+      <div class="exp-cat" onclick="filterExpense(this,'misc')"><div class="exp-cat-icon">📝</div><div class="exp-cat-name">বিবিধ বিল</div><div class="exp-cat-total">৳ ৯,৮০০</div></div>
+    </div>
+
+    <div class="card"><div class="table-wrap"><table id="tbl-expense">
+      <thead><tr><th>তারিখ</th><th>বিভাগ</th><th>বিবরণ</th><th>সরবরাহকারী</th><th>পরিমাণ</th><th>পেমেন্ট পদ্ধতি</th><th>রসিদ নং</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr data-cat="office"><td>০১/০৬</td><td><span class="badge badge-blue">অফিস ভাড়া</span></td><td>জুন মাসের অফিস ভাড়া</td><td>বাড়িওয়ালা</td><td>৳ ১২,০০০</td><td>নগদ</td><td><span class="td-code">RCP-001</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="office"><td>০১/০৬</td><td><span class="badge badge-orange">গোডাউন ভাড়া</span></td><td>জুন মাসের গোডাউন ভাড়া</td><td>বাড়িওয়ালা</td><td>৳ ১০,০০০</td><td>নগদ</td><td><span class="td-code">RCP-002</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="salary"><td>০১/০৬</td><td><span class="badge badge-green">বেতন</span></td><td>জুন মাসের স্টাফ বেতন</td><td>—</td><td>৳ ২৫,০০০</td><td>নগদ</td><td><span class="td-code">RCP-003</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="press"><td>০৫/০৬</td><td><span class="badge badge-purple">প্রেস বিল</span></td><td>আল আমিন প্রেস - NB-002</td><td>আল আমিন প্রেস</td><td>৳ ৮০,০০০</td><td>চেক</td><td><span class="td-code">RCP-004</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="paper"><td>০৩/০৬</td><td><span class="badge badge-yellow">কাগজ বিল</span></td><td>অফসেট পেপার ১০০ রিম</td><td>কাগজ ট্রেডার্স</td><td>৳ ৪৫,০০০</td><td>ব্যাংক ট্রান্সফার</td><td><span class="td-code">RCP-005</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="finish"><td>০৪/০৬</td><td><span class="badge badge-blue">ম্যাট লেমিনেশন</span></td><td>NB-002 কভার ম্যাট</td><td>ফিনিশিং কর্নার</td><td>৳ ৬,৫০০</td><td>নগদ</td><td><span class="td-code">RCP-006</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="binding"><td>০৫/০৬</td><td><span class="badge badge-orange">বাঁধাই বিল</span></td><td>NB-002 - ৫০০ কপি বাঁধাই</td><td>বাঁধাই ঘর</td><td>৳ ১২,০০০</td><td>নগদ</td><td><span class="td-code">RCP-007</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        <tr data-cat="carrying"><td>০৫/০৬</td><td><span class="badge badge-green">ক্যারিং</span></td><td>বই ডেলিভারি - ঢাকা</td><td>ক্যারিয়ার সার্ভিস</td><td>৳ ৩,২০০</td><td>নগদ</td><td><span class="td-code">RCP-008</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= PRINTING COST ======= -->
+  <div class="page" id="page-printing-cost">
+    <div class="section-header">
+      <div class="section-title">🖨️ মুদ্রণ খরচ ট্র্যাকার (বই ভিত্তিক)</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('print-modal')">➕ মুদ্রণ যোগ</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>বই কোড</th><th>বইয়ের নাম</th><th>কপি</th><th>কাগজ বিল</th><th>কভার ছাপা</th><th>ইনার ছাপা</th><th>প্লেট</th><th>স্পট/ম্যাট/এ্যাম্বুশ/ফয়েল</th><th>বাঁধাই</th><th>মোট খরচ</th><th>প্রতি কপি খরচ</th><th>অবস্থা</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="td-code">NB-002</span></td><td class="td-primary">আলোর দিশারী</td><td>৫০০</td>
+          <td>৳ ১৮,০০০</td><td>৳ ১২,০০০</td><td>৳ ৪৫,০০০</td><td>৳ ৮,০০০</td><td>৳ ৬,৫০০</td><td>৳ ১২,০০০</td>
+          <td><b style="color:var(--accent)">৳ ১,০১,৫০০</b></td><td>৳ ২০৩</td>
+          <td><span class="badge badge-green">সম্পন্ন</span></td>
+        </tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= LOAN ======= -->
+  <div class="page" id="page-loan">
+    <div class="section-header">
+      <div class="section-title">🏦 লোন ব্যবস্থাপনা</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('loan-modal')">➕ লোন এন্ট্রি</button>
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="loanTab(this,'taken')">নেওয়া লোন</div>
+      <div class="tab" onclick="loanTab(this,'given')">দেওয়া লোন</div>
+    </div>
+    <div id="loan-taken">
+      <div class="stats-grid" style="margin-bottom:14px">
+        <div class="stat-card"><div class="stat-label">মোট নেওয়া লোন</div><div class="stat-value">৳ ৫,০০,০০০</div><div class="stat-icon">📥</div></div>
+        <div class="stat-card"><div class="stat-label">পরিশোধ করা</div><div class="stat-value" style="color:var(--green)">৳ ১,৮০,০০০</div><div class="stat-icon">✅</div></div>
+        <div class="stat-card"><div class="stat-label">বাকি</div><div class="stat-value" style="color:var(--red)">৳ ৩,২০,০০০</div><div class="stat-icon">💸</div></div>
+        <div class="stat-card"><div class="stat-label">মোট সুদ</div><div class="stat-value" style="color:var(--orange)">৳ ২৮,৫০০</div><div class="stat-icon">📊</div></div>
+      </div>
+      <div class="loan-card">
+        <div class="loan-header">
+          <div class="loan-name">🏦 ইসলামী ব্যাংক — ব্যবসায়িক লোন</div>
+          <span class="badge badge-red">বাকি ৳ ২,৫০,০০০</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3)">নেওয়া: ৳ ৩,৫০,০০০ | সুদ: ১২% | তারিখ: ০১/০১/২০২৫ | কিস্তি: মাসিক</div>
+        <div class="loan-bar"><div class="loan-bar-fill" style="width:28%"></div></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">পরিশোধ ১,০০,০০০ / ৩,৫০,০০০ (২৮%)</div>
+        <div style="margin-top:8px;display:flex;gap:6px"><button class="btn btn-success btn-sm">💰 কিস্তি দিন</button><button class="btn btn-outline btn-sm">📋 বিবরণ</button></div>
+      </div>
+      <div class="loan-card">
+        <div class="loan-header">
+          <div class="loan-name">👤 ব্যক্তিগত — মোহাম্মদ সাহেব</div>
+          <span class="badge badge-yellow">বাকি ৳ ৭০,০০০</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3)">নেওয়া: ৳ ১,৫০,০০০ | সুদ মুক্ত | তারিখ: ১৫/০৩/২০২৫</div>
+        <div class="loan-bar"><div class="loan-bar-fill" style="width:53%"></div></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">পরিশোধ ৮০,০০০ / ১,৫০,০০০ (৫৩%)</div>
+        <div style="margin-top:8px;display:flex;gap:6px"><button class="btn btn-success btn-sm">💰 পরিশোধ</button><button class="btn btn-outline btn-sm">📋 বিবরণ</button></div>
+      </div>
+    </div>
+    <div id="loan-given" style="display:none">
+      <div class="loan-card">
+        <div class="loan-header">
+          <div class="loan-name">👤 দেওয়া লোন — রফিক সাহেব (স্টাফ)</div>
+          <span class="badge badge-yellow">বাকি ৳ ১৫,০০০</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3)">দেওয়া: ৳ ২৫,০০০ | সুদ মুক্ত | তারিখ: ০১/০৪/২০২৫ | বেতন থেকে কর্তন</div>
+        <div class="loan-bar"><div class="loan-bar-fill" style="width:40%"></div></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">আদায় ১০,০০০ / ২৫,০০০ (৪০%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= ROYALTY ======= -->
+  <div class="page" id="page-royalty">
+    <div class="section-header">
+      <div class="section-title">✍️ লেখক রয়্যালটি</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('royalty-modal')">➕ লেখক যোগ</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">মোট প্রাপ্য রয়্যালটি</div><div class="stat-value">৳ ৮৫,৬০০</div><div class="stat-icon">✍️</div></div>
+      <div class="stat-card"><div class="stat-label">পরিশোধ করা</div><div class="stat-value" style="color:var(--green)">৳ ৫৮,২০০</div><div class="stat-icon">✅</div></div>
+      <div class="stat-card"><div class="stat-label">বাকি রয়্যালটি</div><div class="stat-value" style="color:var(--red)">৳ ২৭,৪০০</div><div class="stat-icon">💸</div></div>
+      <div class="stat-card"><div class="stat-label">মোট লেখক</div><div class="stat-value">৮</div><div class="stat-icon">👥</div></div>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>লেখকের নাম</th><th>বইয়ের নাম</th><th>কোড</th><th>রয়্যালটি %</th><th>মোট বিক্রয়</th><th>প্রাপ্য রয়্যালটি</th><th>পরিশোধ</th><th>বাকি</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>
+        <tr><td class="td-primary">মোহাম্মদ আলী</td><td>জীবনের পথে</td><td><span class="td-code">NB-001</span></td><td>১০%</td><td>৳ ২,৪৮,০০০</td><td>৳ ২৪,৮০০</td><td>৳ ১৫,০০০</td><td style="color:var(--red)">৳ ৯,৮০০</td><td><button class="btn btn-success btn-sm">💰 পরিশোধ</button></td></tr>
+        <tr><td class="td-primary">সাইফুল ইসলাম</td><td>আলোর দিশারী</td><td><span class="td-code">NB-002</span></td><td>১২%</td><td>৳ ৮৯,২৫০</td><td>৳ ১০,৭১০</td><td>৳ ১০,৭১০</td><td style="color:var(--green)">৳ ০</td><td><span class="badge badge-green">পরিশোধ</span></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= PROFIT ======= -->
+  <div class="page" id="page-profit">
+    <div class="section-header">
+      <div class="section-title">💰 লাভ-লোকসান হিসাব</div>
+      <div style="display:flex;gap:6px"><input type="month" style="width:140px"><button class="btn btn-outline btn-sm">📊 দেখুন</button></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">জুন ২০২৫ — আয়-ব্যয় বিবরণী</div></div>
+        <div class="card-body">
+          <table>
+            <tr style="background:rgba(92,184,92,.05)"><td class="td-primary" style="padding:10px">📈 মোট বিক্রয় আয়</td><td style="padding:10px;color:var(--green);font-weight:700;text-align:right">৳ ১,৮৫,৪৩০</td></tr>
+            <tr><td style="padding:8px 10px;padding-left:22px;color:var(--text3)">— নিজের বই বিক্রয়</td><td style="padding:8px 10px;text-align:right">৳ ১,০৮,৮৩০</td></tr>
+            <tr><td style="padding:8px 10px;padding-left:22px;color:var(--text3)">— পরিবেশিত বই বিক্রয়</td><td style="padding:8px 10px;text-align:right">৳ ৩৪,০০০</td></tr>
+            <tr><td style="padding:8px 10px;padding-left:22px;color:var(--text3)">— অন্য প্রকাশনীর বই</td><td style="padding:8px 10px;text-align:right">৳ ৪২,৬০০</td></tr>
+            <tr style="background:rgba(224,92,92,.05)"><td class="td-primary" style="padding:10px">📉 মোট খরচ</td><td style="padding:10px;color:var(--red);font-weight:700;text-align:right">৳ ১,৪০,২০০</td></tr>
+            <tr style="background:rgba(212,168,67,.08)"><td style="padding:12px;font-family:'Noto Serif Bengali',serif;font-size:15px;font-weight:700;color:var(--accent)">💰 নিট লাভ</td><td style="padding:12px;text-align:right;font-size:20px;font-weight:700;color:var(--green)">৳ ৪৫,২৩০</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📊 খরচ বিভাজন</div></div>
+        <div class="card-body">
+          <table>
+            <thead><tr><th>খরচের ধরন</th><th>পরিমাণ</th><th>%</th></tr></thead>
+            <tbody>
+              <tr><td class="td-primary">প্রেস ও মুদ্রণ</td><td>৳ ৮০,০০০</td><td><span class="badge badge-red">৫৭%</span></td></tr>
+              <tr><td class="td-primary">কাগজ বিল</td><td>৳ ৪৫,০০০</td><td><span class="badge badge-yellow">৩২%</span></td></tr>
+              <tr><td class="td-primary">বেতন/ভাতা</td><td>৳ ৩৫,০০০</td><td><span class="badge badge-blue">২৫%</span></td></tr>
+              <tr><td class="td-primary">ভাড়া</td><td>৳ ২২,০০০</td><td><span class="badge badge-green">১৬%</span></td></tr>
+              <tr><td class="td-primary">বাঁধাই</td><td>৳ ১২,০০০</td><td><span class="badge badge-green">৯%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= SUMMARY ======= -->
+  <div class="page" id="page-summary">
+    <div class="section-header">
+      <div class="section-title">📊 সামারি রিপোর্ট</div>
+      <button class="btn btn-outline btn-sm">📥 ডাউনলোড</button>
+    </div>
+    <div class="summary-period">
+      <button class="period-btn active" onclick="setPeriod(this)">দৈনিক</button>
+      <button class="period-btn" onclick="setPeriod(this)">সাপ্তাহিক</button>
+      <button class="period-btn" onclick="setPeriod(this)">মাসিক</button>
+      <button class="period-btn" onclick="setPeriod(this)">বার্ষিক</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">মোট বিক্রয়</div><div class="stat-value">৳ ৮,৪৫০</div><div class="stat-sub">আজকের</div><div class="stat-icon">📈</div></div>
+      <div class="stat-card"><div class="stat-label">মোট ব্যয়</div><div class="stat-value" style="color:var(--red)">৳ ১,২৩০</div><div class="stat-sub">আজকের</div><div class="stat-icon">📉</div></div>
+      <div class="stat-card"><div class="stat-label">নিট লাভ</div><div class="stat-value" style="color:var(--green)">৳ ৭,২২০</div><div class="stat-sub">৮৫.৫% মার্জিন</div><div class="stat-icon">💰</div></div>
+      <div class="stat-card"><div class="stat-label">নতুন আদায়</div><div class="stat-value">৳ ৪,২০০</div><div class="stat-sub">২টি পেমেন্ট</div><div class="stat-icon">💳</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">📋 তিন ধরনের বই বিক্রয় তুলনা</div></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>বইয়ের ধরন</th><th>কপি বিক্রি</th><th>আয়</th><th>খরচ</th><th>লাভ</th><th>মার্জিন</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-green">নিজের বই</span></td><td>৩৪৫</td><td>৳ ১,০৮,৮৩০</td><td>৳ ৬২,০০০</td><td style="color:var(--green)">৳ ৪৬,৮৩০</td><td><span class="badge badge-green">৪৩%</span></td></tr>
+          <tr><td><span class="badge badge-blue">পরিবেশিত বই</span></td><td>১১২</td><td>৳ ৩৪,০০০</td><td>৳ ২২,০০০</td><td style="color:var(--green)">৳ ১২,০০০</td><td><span class="badge badge-blue">৩৫%</span></td></tr>
+          <tr><td><span class="badge badge-orange">অন্য প্রকাশনী</span></td><td>৯৮</td><td>৳ ৪২,৬০০</td><td>৳ ৩৪,০৮০</td><td style="color:var(--green)">৳ ৮,৫২০</td><td><span class="badge badge-yellow">২০%</span></td></tr>
+        </tbody>
+        <tfoot><tr class="total-row"><td>মোট</td><td>৫৫৫</td><td>৳ ১,৮৫,৪৩০</td><td>৳ ১,১৮,০৮০</td><td>৳ ৬৭,৩৫০</td><td>৩৬%</td></tr></tfoot>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- ======= PURCHASE ======= -->
+  <div class="page" id="page-purchase">
+    <div class="section-header">
+      <div class="section-title">🔄 ক্রয় এন্ট্রি</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('purchase-modal')">➕ ক্রয় এন্ট্রি</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>তারিখ</th><th>বই কোড</th><th>বইয়ের নাম</th><th>প্রকাশনী</th><th>কপি</th><th>একক মূল্য</th><th>মোট</th><th>পরিশোধ</th><th>বাকি</th></tr></thead>
+      <tbody>
+        <tr><td>০১/০৬</td><td><span class="td-code">OB-001</span></td><td class="td-primary">রবীন্দ্র রচনাবলী</td><td>আনন্দ পাবলিশার্স</td><td>২০০</td><td>৳ ৩৫০</td><td>৳ ৭০,০০০</td><td>৳ ৭০,০০০</td><td style="color:var(--green)">৳ ০</td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ======= SETTINGS ======= -->
+  <div class="page" id="page-settings">
+    <div class="section-title" style="margin-bottom:14px">⚙️ সেটিংস</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">🏢 প্রকাশনীর তথ্য</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group full"><label>প্রকাশনীর নাম</label><input type="text" value="আল আমীন রিসার্চ পাবলিকেশন"></div>
+            <div class="form-group full"><label>ঠিকানা</label><textarea>বাংলাবাজার, ঢাকা-১১০০</textarea></div>
+            <div class="form-group"><label>মোবাইল</label><input type="text" placeholder="০১xxxxxxxxx"></div>
+            <div class="form-group"><label>ইমেইল</label><input type="email"></div>
+            <div class="form-group"><label>ট্রেড লাইসেন্স নং</label><input type="text"></div>
+            <div class="form-group"><label>ওয়েবসাইট</label><input type="text"></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary">💾 সেভ করুন</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">⚙️ ডিফল্ট সেটিংস</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group"><label>ডিফল্ট পাইকারি কমিশন (%)</label><input type="number" value="25"></div>
+            <div class="form-group"><label>ডিফল্ট এজেন্ট কমিশন (%)</label><input type="number" value="30"></div>
+            <div class="form-group"><label>কম স্টক সতর্কতা</label><input type="number" value="20"></div>
+            <div class="form-group"><label>ডিউ রিমাইন্ডার (দিন আগে)</label><input type="number" value="3"></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary">💾 সেভ করুন</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= BACKUP ======= -->
+  <div class="page" id="page-backup">
+    <div class="section-title" style="margin-bottom:14px">💾 ডেটা ব্যাকআপ</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📤 ডেটা এক্সপোর্ট</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-outline">📊 Excel ফাইল</button>
+            <button class="btn btn-outline">📄 PDF রিপোর্ট</button>
+            <button class="btn btn-outline">💾 JSON ব্যাকআপ</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📥 ডেটা ইম্পোর্ট</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input type="file" style="font-size:11px">
+            <button class="btn btn-primary">🔄 রিস্টোর করুন</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= CASH MEMO ======= -->
+  <div class="page" id="page-cashmemo">
+    <div class="section-header">
+      <div class="section-title">🧾 ক্যাশ মেমো</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="memoTab('list')">📋 তালিকা</button>
+        <button class="btn btn-primary btn-sm" onclick="memoTab('create')">➕ নতুন মেমো</button>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div id="memo-list-panel">
+      <div class="filter-bar">
+        <div class="search-box"><input type="text" placeholder="মেমো নং / কাস্টমার..."></div>
+        <input type="date" style="width:130px">
+        <select style="width:140px"><option>সব ধরন</option><option>নগদ বিক্রয়</option><option>পাইকারি চালান</option><option>এজেন্ট চালান</option><option>রিটার্ন মেমো</option></select>
+      </div>
+      <div id="saved-memos">
+        <div class="memo-list-item">
+          <div class="memo-list-num">CM-2025-001</div>
+          <div class="memo-list-info">
+            <div class="memo-list-name">রহিম বুক হাউস</div>
+            <div class="memo-list-meta">০৫/০৬/২০২৫ · পাইকারি চালান · পরিশোধ: নগদ</div>
+          </div>
+          <div class="memo-list-amount">৳ ৪,২০০</div>
+          <div style="display:flex;gap:5px">
+            <button class="btn btn-outline btn-sm" onclick="loadSampleMemo(); memoTab('create')">👁️</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleMemo(); setTimeout(printMemo,200)">🖨️</button>
+          </div>
+        </div>
+        <div class="memo-list-item">
+          <div class="memo-list-num">CM-2025-002</div>
+          <div class="memo-list-info">
+            <div class="memo-list-name">করিম এজেন্সি</div>
+            <div class="memo-list-meta">০৫/০৬/২০২৫ · এজেন্ট চালান · বাকি</div>
+          </div>
+          <div class="memo-list-amount" style="color:var(--red)">৳ ১২,৫০০</div>
+          <div style="display:flex;gap:5px">
+            <button class="btn btn-outline btn-sm" onclick="loadSampleMemo2(); memoTab('create')">👁️</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleMemo2(); setTimeout(printMemo,200)">🖨️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE -->
+    <div id="memo-create-panel" style="display:none">
+      <div class="memo-builder">
+        <!-- FORM SIDE -->
+        <div class="memo-form-panel">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📋 মেমোর ধরন</div></div>
+            <div class="card-body">
+              <div class="memo-type-tabs">
+                <div class="memo-type-btn active" onclick="setMemoType(this,'নগদ বিক্রয়')">🛒 নগদ বিক্রয়</div>
+                <div class="memo-type-btn" onclick="setMemoType(this,'পাইকারি চালান')">🏪 পাইকারি</div>
+                <div class="memo-type-btn" onclick="setMemoType(this,'এজেন্ট চালান')">🤝 এজেন্ট</div>
+                <div class="memo-type-btn" onclick="setMemoType(this,'রিটার্ন মেমো')">↩️ রিটার্ন</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">👤 কাস্টমার তথ্য</div></div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>কাস্টমার নির্বাচন</label>
+                  <select id="cm-customer" onchange="fillCust()">
+                    <option value="">— নির্বাচন করুন —</option>
+                    <option value="রহিম বুক হাউস|বাংলাবাজার, ঢাকা|০১৭৫৫-৩৩৪৪৫৫">রহিম বুক হাউস</option>
+                    <option value="করিম এজেন্সি|নীলক্ষেত, ঢাকা|০১৭১১-২২৩৩৪৪">করিম এজেন্সি</option>
+                    <option value="সুমাইয়া বেগম|মিরপুর, ঢাকা|০১৭৪৪-১১২২৩৩">সুমাইয়া বেগম</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>মোবাইল</label><input type="tel" id="cm-mobile" oninput="updatePrev()"></div>
+                <div class="form-group full"><label>ঠিকানা</label><input type="text" id="cm-address" oninput="updatePrev()"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">📚 বইয়ের তালিকা</div>
+              <button class="btn btn-outline btn-sm" onclick="addItemRow()">➕ বই যোগ</button>
+            </div>
+            <div class="card-body">
+              <div id="item-rows"></div>
+              <div style="text-align:right;font-size:11px;color:var(--text3);margin-top:6px">মোট আইটেম: <b id="item-cnt">0</b>টি | কপি: <b id="total-qty">0</b>টি</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">💰 মূল্য ও পেমেন্ট</div></div>
+            <div class="card-body">
+              <div class="form-grid-3">
+                <div class="form-group"><label>মোট মূল্য (৳)</label><input type="number" id="cm-subtotal" readonly style="color:var(--accent);font-weight:700" value="0"></div>
+                <div class="form-group"><label>অতিরিক্ত ছাড় (৳)</label><input type="number" id="cm-extra" value="0" oninput="recalc()"></div>
+                <div class="form-group"><label>নিট মূল্য (৳)</label><input type="number" id="cm-net" readonly style="color:var(--green);font-weight:700" value="0"></div>
+                <div class="form-group"><label>পরিশোধ (৳)</label><input type="number" id="cm-paid" value="0" oninput="recalc()"></div>
+                <div class="form-group"><label>বাকি (৳)</label><input type="number" id="cm-due" readonly style="color:var(--red);font-weight:700" value="0"></div>
+                <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select id="cm-method" onchange="updatePrev()"><option>নগদ</option><option>বিকাশ</option><option>নগদ অ্যাপ</option><option>রকেট</option><option>ব্যাংক ট্রান্সফার</option><option>চেক</option><option>বাকি</option></select></div>
+                <div class="form-group"><label>মেমো তারিখ</label><input type="date" id="cm-date" onchange="updatePrev()"></div>
+                <div class="form-group"><label>ডিউ তারিখ</label><input type="date" id="cm-duedate" onchange="updatePrev()"></div>
+                <div class="form-group"><label>মেমো নং</label><input type="text" id="cm-num" value="CM-2025-004" readonly style="opacity:.7"></div>
+              </div>
+              <div class="form-group" style="margin-top:8px"><label>মন্তব্য</label><input type="text" id="cm-note" oninput="updatePrev()"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline" style="flex:1" onclick="memoTab('list')">← পিছনে</button>
+            <button class="btn btn-success" style="flex:1" onclick="saveMemo()">💾 সেভ</button>
+            <button class="btn btn-primary" style="flex:1.5" onclick="printMemo()">🖨️ প্রিন্ট</button>
+          </div>
+        </div>
+
+        <!-- PREVIEW SIDE -->
+        <div class="memo-preview-panel">
+          <div style="font-size:10px;color:var(--text3);text-align:center;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">— লাইভ প্রিভিউ —</div>
+          <div class="memo-paper" id="memo-preview"></div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="copyMemo()">📋 কপি</button>
+            <button class="btn btn-primary btn-sm" style="flex:1" onclick="printMemo()">🖨️ প্রিন্ট</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- end content -->
+</div><!-- end main -->
+
+<!-- ======= MODALS ======= -->
+
+<!-- Book Modal -->
+<div class="modal-overlay" id="book-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="book-modal-title">📗 নতুন বই যোগ করুন</div>
+      <button class="modal-close" onclick="closeModal('book-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>বই কোড</label><input type="text" placeholder="স্বয়ংক্রিয়" readonly style="opacity:.6"></div>
+        <div class="form-group"><label>বইয়ের নাম *</label><input type="text"></div>
+        <div class="form-group"><label>লেখক *</label><input type="text"></div>
+        <div class="form-group"><label>বিভাগ</label><select><option>ইসলামী</option><option>সাহিত্য</option><option>শিক্ষামূলক</option><option>শিশু সাহিত্য</option><option>গবেষণা</option></select></div>
+        <div class="form-group"><label>ISBN</label><input type="text"></div>
+        <div class="form-group"><label>মুদ্রণ সংখ্যা</label><input type="number"></div>
+        <div class="form-group"><label>মুদ্রণ মূল্য (৳)</label><input type="number"></div>
+        <div class="form-group"><label>বিক্রয় মূল্য (৳) *</label><input type="number"></div>
+        <div class="form-group"><label>পাইকারি কমিশন (%)</label><input type="number" value="25"></div>
+        <div class="form-group"><label>এজেন্ট কমিশন (%)</label><input type="number" value="30"></div>
+        <div class="form-group"><label>লেখক রয়্যালটি (%)</label><input type="number" value="10"></div>
+        <div class="form-group"><label>সংস্করণ</label><input type="text" placeholder="১ম সংস্করণ"></div>
+        <div class="form-group"><label>প্রকাশের তারিখ</label><input type="date"></div>
+        <div class="form-group"><label>বোনাস ছাড় (%)</label><input type="number"></div>
+        <div class="form-group full"><label>বিবরণ</label><textarea></textarea></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('book-modal')">বাতিল</button><button class="btn btn-primary">💾 সেভ</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Expense Modal -->
+<div class="modal-overlay" id="expense-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">💸 খরচ এন্ট্রি</div>
+      <button class="modal-close" onclick="closeModal('expense-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>তারিখ *</label><input type="date"></div>
+        <div class="form-group"><label>বিভাগ *</label>
+          <select>
+            <option>অফিস ভাড়া</option>
+            <option>গোডাউন ভাড়া</option>
+            <option>স্টাফ বেতন</option>
+            <option>স্টাফ ভাতা</option>
+            <option>স্টাফ বোনাস</option>
+            <option>লেখক-কম্পোজ বিল</option>
+            <option>কভার ডিজাইন বিল</option>
+            <option>ইনার ডিজাইন বিল</option>
+            <option>প্লেট মেকিং বিল</option>
+            <option>প্রেসের বিল</option>
+            <option>কাগজ বিল</option>
+            <option>কভার কালার ছাপা বিল</option>
+            <option>ইনার কালার ছাপা বিল</option>
+            <option>স্পট বিল</option>
+            <option>ম্যাট বিল</option>
+            <option>এ্যাম্বুশ বিল</option>
+            <option>ফয়েল বিল</option>
+            <option>বাঁধাই বিল</option>
+            <option>ক্যারিং বিল</option>
+            <option>বিবিধ বিল</option>
+          </select>
+        </div>
+        <div class="form-group"><label>সংশ্লিষ্ট বই (ঐচ্ছিক)</label><select><option>— সব খরচ —</option><option>NB-001 - জীবনের পথে</option><option>NB-002 - আলোর দিশারী</option></select></div>
+        <div class="form-group"><label>সরবরাহকারী / প্রদানকারী</label><input type="text"></div>
+        <div class="form-group full"><label>বিবরণ *</label><input type="text"></div>
+        <div class="form-group"><label>পরিমাণ (৳) *</label><input type="number"></div>
+        <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select><option>নগদ</option><option>বিকাশ</option><option>ব্যাংক ট্রান্সফার</option><option>চেক</option><option>বাকি</option></select></div>
+        <div class="form-group"><label>পরিশোধ অবস্থা</label><select><option>সম্পূর্ণ পরিশোধ</option><option>আংশিক পরিশোধ</option><option>বাকি</option></select></div>
+        <div class="form-group"><label>রসিদ নং</label><input type="text"></div>
+        <div class="form-group full"><label>মন্তব্য</label><input type="text"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('expense-modal')">বাতিল</button><button class="btn btn-primary">💾 সেভ</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Loan Modal -->
+<div class="modal-overlay" id="loan-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">🏦 লোন এন্ট্রি</div>
+      <button class="modal-close" onclick="closeModal('loan-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>ধরন</label><select><option>নেওয়া লোন</option><option>দেওয়া লোন</option></select></div>
+        <div class="form-group"><label>লোনদাতা / গ্রহীতার নাম</label><input type="text"></div>
+        <div class="form-group"><label>তারিখ</label><input type="date"></div>
+        <div class="form-group"><label>পরিমাণ (৳)</label><input type="number"></div>
+        <div class="form-group"><label>সুদের হার (% বার্ষিক)</label><input type="number" placeholder="সুদ মুক্ত হলে ০"></div>
+        <div class="form-group"><label>পরিশোধের ধরন</label><select><option>মাসিক কিস্তি</option><option>এককালীন</option><option>বেতন থেকে কর্তন</option><option>অনির্ধারিত</option></select></div>
+        <div class="form-group"><label>কিস্তির পরিমাণ (৳)</label><input type="number"></div>
+        <div class="form-group"><label>মেয়াদ (মাস)</label><input type="number"></div>
+        <div class="form-group full"><label>মন্তব্য</label><input type="text"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('loan-modal')">বাতিল</button><button class="btn btn-primary">💾 সেভ</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Modal -->
+<div class="modal-overlay" id="customer-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="cust-modal-title">👤 নতুন কাস্টমার</div>
+      <button class="modal-close" onclick="closeModal('customer-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>প্রতিষ্ঠানের নাম *</label><input type="text"></div>
+        <div class="form-group"><label>মালিকের নাম *</label><input type="text"></div>
+        <div class="form-group"><label>মালিকের মোবাইল *</label><input type="tel"></div>
+        <div class="form-group"><label>ম্যানেজারের নাম</label><input type="text"></div>
+        <div class="form-group"><label>ম্যানেজারের মোবাইল</label><input type="tel"></div>
+        <div class="form-group"><label>জেলা</label><select><option>ঢাকা</option><option>চট্টগ্রাম</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option></select></div>
+        <div class="form-group full"><label>সম্পূর্ণ ঠিকানা *</label><textarea></textarea></div>
+        <div class="form-group"><label>কমিশন (%)</label><input type="number" value="30"></div>
+        <div class="form-group"><label>ক্রেডিট লিমিট (৳)</label><input type="number"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('customer-modal')">বাতিল</button><button class="btn btn-primary">💾 সেভ</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Due Modal -->
+<div class="modal-overlay" id="due-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header"><div class="modal-title">💰 ডিউ আদায়</div><button class="modal-close" onclick="closeModal('due-modal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>তারিখ</label><input type="date"></div>
+        <div class="form-group"><label>কাস্টমার</label><select><option>করিম এজেন্সি (৳১২,৫০০)</option><option>নজরুল বুক (৳২৮,৩০০)</option></select></div>
+        <div class="form-group"><label>আদায়কৃত পরিমাণ (৳)</label><input type="number"></div>
+        <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select><option>নগদ</option><option>বিকাশ</option><option>ব্যাংক</option></select></div>
+        <div class="form-group full"><label>মন্তব্য</label><input type="text"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('due-modal')">বাতিল</button><button class="btn btn-primary">✅ নিশ্চিত করুন</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Sale Modal -->
+<div class="modal-overlay" id="quick-sale-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header"><div class="modal-title">⚡ দ্রুত বিক্রয়</div><button class="modal-close" onclick="closeModal('quick-sale-modal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>বই কোড / নাম</label><input type="text" placeholder="কোড বা নাম..."></div>
+        <div class="form-group"><label>পরিমাণ</label><input type="number" value="1"></div>
+        <div class="form-group"><label>কাস্টমার</label><input type="text"></div>
+        <div class="form-group"><label>পেমেন্ট</label><select><option>নগদ</option><option>বিকাশ</option><option>বাকি</option></select></div>
+        <div class="form-group full"><label>মোট (৳)</label><input type="number" style="font-size:18px;color:var(--accent)"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('quick-sale-modal')">বাতিল</button><button class="btn btn-primary">✅ সম্পন্ন</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Sale Modal -->
+<div class="modal-overlay" id="sale-modal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">🛒 নতুন বিক্রয়</div><button class="modal-close" onclick="closeModal('sale-modal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid" style="margin-bottom:12px">
+        <div class="form-group"><label>ইনভয়েস নং</label><input value="INV-2025-004" readonly style="opacity:.7"></div>
+        <div class="form-group"><label>তারিখ *</label><input type="date"></div>
+        <div class="form-group"><label>কাস্টমার টাইপ</label><select><option>এজেন্ট</option><option>পাইকারি</option><option>খুচরা</option></select></div>
+        <div class="form-group"><label>কাস্টমার *</label><select><option>করিম এজেন্সি</option><option>রহিম বুক হাউস</option></select></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:10px;margin-bottom:12px">
+        <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px">📚 বই তালিকা</div>
+        <table style="font-size:11px">
+          <thead><tr><th>বই</th><th>কপি</th><th>মূল্য</th><th>কমিশন</th><th>মোট</th><th></th></tr></thead>
+          <tbody><tr>
+            <td><select style="font-size:11px;padding:4px"><option>NB-002 - আলোর দিশারী</option><option>NB-001 - জীবনের পথে</option></select></td>
+            <td><input type="number" value="10" style="width:55px;font-size:11px;padding:4px"></td>
+            <td>৳ ৩৫০</td>
+            <td><input type="number" value="25" style="width:45px;font-size:11px;padding:4px">%</td>
+            <td>৳ ২,৬২৫</td>
+            <td><button class="btn btn-danger btn-sm">✕</button></td>
+          </tr></tbody>
+        </table>
+        <button class="btn btn-outline btn-sm" style="margin-top:6px">➕ বই যোগ</button>
+      </div>
+      <div class="form-grid-3">
+        <div class="form-group"><label>নিট পরিমাণ</label><input type="number" value="2625" readonly style="color:var(--accent)"></div>
+        <div class="form-group"><label>পরিশোধ (৳)</label><input type="number"></div>
+        <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select><option>নগদ</option><option>বিকাশ</option><option>ব্যাংক</option></select></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('sale-modal')">বাতিল</button><button class="btn btn-primary">💾 সেভ করুন</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Royalty Modal -->
+<div class="modal-overlay" id="royalty-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header"><div class="modal-title">✍️ লেখক রয়্যালটি পরিশোধ</div><button class="modal-close" onclick="closeModal('royalty-modal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>লেখক</label><select><option>মোহাম্মদ আলী (বাকি ৳৯,৮০০)</option></select></div>
+        <div class="form-group"><label>পরিমাণ (৳)</label><input type="number"></div>
+        <div class="form-group"><label>তারিখ</label><input type="date"></div>
+        <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select><option>নগদ</option><option>বিকাশ</option><option>ব্যাংক</option></select></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-outline" onclick="closeModal('royalty-modal')">বাতিল</button><button class="btn btn-primary">✅ পরিশোধ</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== PAGE TITLES ======
+const TITLES = {
+  dashboard:'ড্যাশবোর্ড',
+  'own-books':'নিজের বই','dist-books':'পরিবেশিত বই','other-books':'অন্য প্রকাশনীর বই',
+  stock:'স্টক ব্যবস্থাপনা',sales:'বিক্রয় এন্ট্রি',purchase:'ক্রয় এন্ট্রি',
+  due:'ডিউ ব্যবস্থাপনা',cashmemo:'ক্যাশ মেমো',agents:'এজেন্ট',
+  wholesale:'পাইকারি',retail:'খুচরা',expense:'সব ধরনের খরচ',
+  'printing-cost':'মুদ্রণ খরচ',loan:'লোন ব্যবস্থাপনা',royalty:'লেখক রয়্যালটি',
+  profit:'লাভ-লোকসান',summary:'সামারি রিপোর্ট',settings:'সেটিংস',backup:'ব্যাকআপ'
+};
+
+function go(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const pg = document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+  });
+  document.getElementById('page-title').textContent = TITLES[id]||id;
+  closeSidebar();
+}
+
+// ====== SIDEBAR MOBILE ======
+function toggleSidebar(){
+  const s=document.getElementById('sidebar');
+  const o=document.getElementById('sidebar-overlay');
+  s.classList.toggle('open');
+  o.classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// ====== MODALS ======
+function openModal(id,extra){
+  document.getElementById(id).classList.add('open');
+  if(id==='book-modal'&&extra){
+    const t={own:'📗 নিজের নতুন বই',dist:'📦 পরিবেশিত বই যোগ',other:'📘 অন্য প্রকাশনীর বই'};
+    document.getElementById('book-modal-title').textContent=t[extra]||'বই যোগ';
+  }
+  if(id==='customer-modal'&&extra){
+    document.getElementById('cust-modal-title').textContent='👤 নতুন '+extra+' যোগ';
+  }
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+});
+
+// ====== DATE ======
+(function(){
+  const now=new Date();
+  const d=['রবি','সোম','মঙ্গল','বুধ','বৃহস্পতি','শুক্র','শনি'];
+  const m=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+  document.getElementById('topbar-date').textContent=d[now.getDay()]+', '+now.getDate()+' '+m[now.getMonth()]+' '+now.getFullYear();
+})();
+
+// ====== MINI CHART ======
+(function(){
+  const el=document.getElementById('dash-chart');
+  if(!el)return;
+  const v=[45,62,38,78,55,89,71,94,67,82,50,73];
+  const mx=Math.max(...v);
+  const lbs=['জা','ফে','মা','এ','মে','জু','জু','আ','সে','অ','ন','ডি'];
+  el.innerHTML=v.map((x,i)=>`<div class="bar-wrap"><div class="bar" style="height:${Math.round(x/mx*65)}px"></div><div class="bar-label">${lbs[i]}</div></div>`).join('');
+})();
+
+// ====== FILTER ======
+function filterTbl(inp,id){
+  const v=inp.value.toLowerCase();
+  document.querySelectorAll('#'+id+' tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(v)?'':'none';});
+}
+
+// ====== EXPENSE FILTER ======
+function filterExpense(btn,cat){
+  document.querySelectorAll('.exp-cat').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#tbl-expense tbody tr').forEach(r=>{
+    r.style.display=(cat==='all'||r.dataset.cat===cat)?'':'none';
+  });
+}
+
+// ====== PERIOD BTN ======
+function setPeriod(btn){document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+
+// ====== LOAN TABS ======
+function loanTab(tab,id){
+  document.querySelectorAll('#page-loan .tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('loan-taken').style.display=id==='taken'?'':'none';
+  document.getElementById('loan-given').style.display=id==='given'?'':'none';
+}
+
+// ====== MEMO ======
+const PUB={name:'আল আমীন রিসার্চ পাবলিকেশন',addr:'বাংলাবাজার, ঢাকা-১১০০ | মোবাইল: ০১৭১১-XXXXXX',tag:'জ্ঞানের আলো, সমাজের পথ'};
+const BOOKS=[
+  {code:'NB-001',name:'জীবনের পথে',price:250,dis:25},
+  {code:'NB-002',name:'আলোর দিশারী',price:350,dis:25},
+  {code:'NB-003',name:'শিক্ষার আলো',price:220,dis:25},
+  {code:'PB-001',name:'বাংলা ব্যাকরণ সমগ্র',price:380,dis:30},
+  {code:'PB-002',name:'ইসলামী ফিকহ',price:520,dis:30},
+  {code:'OB-001',name:'রবীন্দ্র রচনাবলী',price:600,dis:20},
+];
+
+let mItems=[],mType='নগদ বিক্রয়',mNum=4;
+
+function memoTab(t){
+  document.getElementById('memo-list-panel').style.display=t==='list'?'':'none';
+  document.getElementById('memo-create-panel').style.display=t==='create'?'':'none';
+  if(t==='create'){
+    if(!mItems.length)addItemRow();
+    const today=new Date().toISOString().split('T')[0];
+    document.getElementById('cm-date').value=today;
+    updatePrev();
+  }
+}
+
+function setMemoType(btn,t){
+  document.querySelectorAll('.memo-type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); mType=t; updatePrev();
+}
+
+function fillCust(){
+  const v=document.getElementById('cm-customer').value;
+  if(!v)return;
+  const[,addr,mob]=v.split('|');
+  document.getElementById('cm-address').value=addr!=='—'?addr:'';
+  document.getElementById('cm-mobile').value=mob!=='—'?mob:'';
+  updatePrev();
+}
+
+function addItemRow(){
+  mItems.push({id:Date.now(),code:'',name:'',qty:1,price:0,dis:0});
+  renderItems();
+}
+
+function removeItem(id){mItems=mItems.filter(i=>i.id!==id);renderItems();recalc();}
+
+function renderItems(){
+  const c=document.getElementById('item-rows');
+  c.innerHTML='';
+  mItems.forEach(item=>{
+    const d=document.createElement('div');
+    d.className='item-row-form';
+    d.innerHTML=`
+      <div class="form-group" style="margin:0;grid-column:1/-2">
+        <label>বই নির্বাচন</label>
+        <select onchange="onBook(${item.id},this)">
+          <option value="">— বই বেছে নিন —</option>
+          ${BOOKS.map(b=>`<option value="${b.code}" ${item.code===b.code?'selected':''}>${b.code} · ${b.name}</option>`).join('')}
+        </select>
+      </div>
+      <button class="rm-btn" onclick="removeItem(${item.id})">✕</button>
+      <div class="form-group" style="margin:0"><label>পরিমাণ</label><input type="number" min="1" value="${item.qty}" onchange="onItemF(${item.id},'qty',this.value)"></div>
+      <div class="form-group" style="margin:0"><label>মূল্য (৳)</label><input type="number" value="${item.price}" onchange="onItemF(${item.id},'price',this.value)"></div>
+      <div class="form-group" style="margin:0"><label>কমিশন %</label><input type="number" value="${item.dis}" onchange="onItemF(${item.id},'dis',this.value)"></div>
+    `;
+    c.appendChild(d);
+  });
+  recalc();
+}
+
+function onBook(id,sel){
+  const b=BOOKS.find(x=>x.code===sel.value);
+  const item=mItems.find(i=>i.id===id);
+  if(!item)return;
+  if(b){item.code=b.code;item.name=b.name;item.price=b.price;item.dis=b.dis;}
+  renderItems();
+}
+
+function onItemF(id,f,v){const item=mItems.find(i=>i.id===id);if(item){item[f]=Number(v)||0;recalc();updatePrev();}}
+
+function iNet(item){return Math.round(item.qty*item.price*(1-item.dis/100));}
+
+function recalc(){
+  const sub=mItems.reduce((s,i)=>s+i.qty*i.price,0);
+  const ex=Number(document.getElementById('cm-extra').value)||0;
+  const discTotal=mItems.reduce((s,i)=>s+i.qty*i.price*i.dis/100,0);
+  const net=Math.round(sub-discTotal-ex);
+  const paid=Number(document.getElementById('cm-paid').value)||0;
+  const due=Math.max(0,net-paid);
+  document.getElementById('cm-subtotal').value=sub;
+  document.getElementById('cm-net').value=net;
+  document.getElementById('cm-due').value=due;
+  document.getElementById('item-cnt').textContent=mItems.length;
+  document.getElementById('total-qty').textContent=mItems.reduce((s,i)=>s+(Number(i.qty)||0),0);
+  updatePrev();
+}
+
+// Bengali amount in words
+function numWords(n){
+  const u=['','এক','দুই','তিন','চার','পাঁচ','ছয়','সাত','আট','নয়','দশ','এগারো','বারো','তেরো','চোদ্দ','পনেরো','ষোলো','সতেরো','আঠারো','উনিশ','বিশ'];
+  const t=['','','বিশ','ত্রিশ','চল্লিশ','পঞ্চাশ','ষাট','সত্তর','আশি','নব্বই'];
+  if(n<=0)return'শূন্য';
+  let w='';
+  if(n>=10000000){w+=numWords(Math.floor(n/10000000))+' কোটি ';n%=10000000;}
+  if(n>=100000){w+=numWords(Math.floor(n/100000))+' লক্ষ ';n%=100000;}
+  if(n>=1000){w+=numWords(Math.floor(n/1000))+' হাজার ';n%=1000;}
+  if(n>=100){w+=numWords(Math.floor(n/100))+' শত ';n%=100;}
+  if(n>0){w+=n<=20?u[n]:t[Math.floor(n/10)]+(n%10?' '+u[n%10]:'');}
+  return w.trim()+' টাকা মাত্র';
+}
+
+function fDate(s){if(!s)return'—';const[y,m,d]=s.split('-');return`${d}/${m}/${y}`;}
+
+function buildMemo(){
+  const cname=document.getElementById('cm-customer').value?document.getElementById('cm-customer').value.split('|')[0]:'— কাস্টমার নাম —';
+  const addr=document.getElementById('cm-address').value||'—';
+  const mob=document.getElementById('cm-mobile').value||'—';
+  const date=document.getElementById('cm-date').value;
+  const ddate=document.getElementById('cm-duedate').value;
+  const num=document.getElementById('cm-num').value;
+  const method=document.getElementById('cm-method').value;
+  const note=document.getElementById('cm-note').value;
+  const net=Number(document.getElementById('cm-net').value)||0;
+  const paid=Number(document.getElementById('cm-paid').value)||0;
+  const due=Number(document.getElementById('cm-due').value)||0;
+  const ex=Number(document.getElementById('cm-extra').value)||0;
+
+  const rows=mItems.filter(i=>i.name).map((item,idx)=>`
+    <tr>
+      <td style="text-align:center">${idx+1}</td>
+      <td><span class="i-code">${item.code}</span></td>
+      <td>${item.name}</td>
+      <td style="text-align:center">${item.qty}</td>
+      <td style="text-align:right">৳ ${item.price.toLocaleString()}</td>
+      <td style="text-align:center">${item.dis}%</td>
+      <td style="text-align:right;font-weight:600">৳ ${iNet(item).toLocaleString()}</td>
+    </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:#aaa;padding:12px">— বই যোগ করুন —</td></tr>';
+
+  return`<div class="memo-header-band">
+    <div class="memo-pub-name">${PUB.name}</div>
+    <div class="memo-pub-sub">${PUB.addr}</div>
+  </div>
+  <div class="memo-title-row">✦ ক্যাশ মেমো · ${mType} ✦</div>
+  <div class="memo-meta">
+    <div class="memo-meta-col"><strong>প্রাপক:</strong> ${cname}<br><strong>ঠিকানা:</strong> ${addr}<br><strong>মোবাইল:</strong> ${mob}</div>
+    <div class="memo-meta-col" style="text-align:right"><strong>মেমো নং:</strong> ${num}<br><strong>তারিখ:</strong> ${fDate(date)}${ddate?`<br><strong>ডিউ:</strong> ${fDate(ddate)}`:''}</div>
+  </div>
+  <table class="memo-items-tbl">
+    <thead><tr><th style="width:24px;text-align:center">#</th><th style="width:65px">কোড</th><th>বইয়ের নাম</th><th style="width:36px;text-align:center">কপি</th><th style="width:65px;text-align:right">মূল্য</th><th style="width:50px;text-align:center">কমিশন</th><th style="width:70px;text-align:right">মোট</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div class="memo-total-section">
+    ${ex>0?`<div class="memo-total-row"><span>অতিরিক্ত ছাড়:</span><span>- ৳ ${ex.toLocaleString()}</span></div>`:''}
+    <div class="memo-total-row grand"><span>সর্বমোট নিট:</span><span>৳ ${net.toLocaleString()}</span></div>
+  </div>
+  <div class="memo-words">▶ কথায়: ${net>0?numWords(net):'—'}</div>
+  <div class="memo-pay-row">
+    <div class="memo-pay-item"><div class="p-label">পেমেন্ট</div><div class="p-value">${method}</div></div>
+    <div class="memo-pay-item"><div class="p-label">পরিশোধিত</div><div class="p-value paid-ok">৳ ${paid.toLocaleString()}</div></div>
+    <div class="memo-pay-item"><div class="p-label">বাকি</div><div class="p-value ${due>0?'due':'paid-ok'}">৳ ${due.toLocaleString()}</div></div>
+  </div>
+  ${note?`<div style="padding:6px 15px;font-size:10px;color:#666;background:#fdfbf5;border-top:1px solid #eee"><b>মন্তব্য:</b> ${note}</div>`:''}
+  <div class="memo-sig-row">
+    <div class="memo-sig-item"><div class="sig-line"></div><div>ক্রেতার স্বাক্ষর</div></div>
+    <div class="memo-sig-item"><div class="sig-line"></div><div>অনুমোদনকারী</div></div>
+    <div class="memo-sig-item"><div class="sig-line"></div><div>বিক্রয়কারীর স্বাক্ষর</div></div>
+  </div>
+  <div class="memo-footer-band"><div class="fl">ধন্যবাদ আমাদের সাথে থাকার জন্য</div><div class="fr">${PUB.tag}</div></div>`;
+}
+
+function updatePrev(){const el=document.getElementById('memo-preview');if(el)el.innerHTML=buildMemo();}
+
+function printMemo(){
+  document.getElementById('print-content').innerHTML=`<div class="memo-paper" style="max-width:560px;margin:0 auto;">${buildMemo()}</div>`;
+  window.print();
+}
+
+function saveMemo(){
+  alert('✅ মেমো সেভ হয়েছে!\n\nমেমো নং: '+document.getElementById('cm-num').value);
+  mNum++;
+  document.getElementById('cm-num').value='CM-2025-00'+mNum;
+  memoTab('list');
+}
+
+function copyMemo(){
+  const net=document.getElementById('cm-net').value;
+  const cname=document.getElementById('cm-customer').value?document.getElementById('cm-customer').value.split('|')[0]:'';
+  const txt=`${PUB.name}\nমেমো নং: ${document.getElementById('cm-num').value}\nকাস্টমার: ${cname}\nমোট: ৳${net}\n${PUB.tag}`;
+  navigator.clipboard?.writeText(txt).then(()=>alert('✅ টেক্সট কপি হয়েছে!'));
+}
+
+function loadSampleMemo(){
+  mItems=[
+    {id:1,code:'NB-002',name:'আলোর দিশারী',qty:8,price:350,dis:25},
+    {id:2,code:'NB-003',name:'শিক্ষার আলো',qty:4,price:220,dis:25},
+  ];
+  document.getElementById('cm-customer').value='রহিম বুক হাউস|বাংলাবাজার, ঢাকা|০১৭৫৫-৩৩৪৪৫৫';
+  fillCust();
+  document.getElementById('cm-num').value='CM-2025-001';
+  document.getElementById('cm-paid').value=4200;
+  document.getElementById('cm-extra').value=0;
+  setMemoType(document.querySelectorAll('.memo-type-btn')[1],'পাইকারি চালান');
+  renderItems();
+}
+
+function loadSampleMemo2(){
+  mItems=[
+    {id:1,code:'NB-001',name:'জীবনের পথে',qty:20,price:250,dis:30},
+    {id:2,code:'NB-002',name:'আলোর দিশারী',qty:15,price:350,dis:30},
+  ];
+  document.getElementById('cm-customer').value='করিম এজেন্সি|নীলক্ষেত, ঢাকা|০১৭১১-২২৩৩৪৪';
+  fillCust();
+  document.getElementById('cm-num').value='CM-2025-002';
+  document.getElementById('cm-paid').value=0;
+  document.getElementById('cm-extra').value=0;
+  setMemoType(document.querySelectorAll('.memo-type-btn')[2],'এজেন্ট চালান');
+  renderItems();
+}
+</script>
+</body>
+</html>
